@@ -4,15 +4,17 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        int i= 0;
+        //contador de opcoes
         int[] casaAtual = new int[2];
-        int[] opcoesDeMovimento = new int[8];
+        int[][] opcoesDeMovimento = new int[2][8];
         int[] movimentosFeitos;
-        int numPassos = 0;
+        int numPassos = 63;
 
         // Tabuleiro
         boolean[][] tabuleiro = new boolean[8][8];
 
-        // matriz que guarda os movimentos
+        // matriz que guarda os movimentos FAZER CLASSE
         boolean[][][] movimentosErrados = new boolean[8][8][1000];
 
         // primeiro movimento
@@ -20,38 +22,74 @@ public class Main {
 
         casaAtual = lerString(scan.next());
 
-        while(numPassos != 64){
+        while (numPassos != 64) {
+            do{
+                int[] opcoes = popularOpcoes(i);
+                if ((opcoes[0] + casaAtual[0]) < 7 && ((opcoes[1] + casaAtual[0]) > 0)
+                    && (opcoes[1] + casaAtual[1]) < 7 && ((opcoes[0] + casaAtual[1]) > 0)) {
 
-            //popular opçao na hora e verificar se cai fora do tabuleiro
+                    opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
 
-            //Direita para baixo
-            if((casaAtual[0] + 2 < 7) && ((casaAtual[1]-1)>0)){
-                opcoesDeMovimento[0] = ((casaAtual[0] + 2) * 10) + (casaAtual[1] - 1);
-            }
-            //Direita para Cima
-            if((casaAtual[0] + 2 < 7) && ((casaAtual[1]-1)>0)){
-                opcoesDeMovimento[1] = ((casaAtual[0] + 2) * 10) + (casaAtual[1] + 1);
-            }
-            //Esquerda para Baixo
-            if((casaAtual[0] + 2 < 7) && ((casaAtual[1]-1)>0)){
-                opcoesDeMovimento[2] = ((casaAtual[0] - 2) * 10) + (casaAtual[1] - 1);
-            }
-            //Esquerda para Cima
-            if((casaAtual[0] + 2 < 7) && ((casaAtual[1]-1)>0)){
-                opcoesDeMovimento[3] = ((casaAtual[0] - 2) * 10) + (casaAtual[1] + 1);
-            }
+                    System.out.println("opcao linha: " + opcoesDeMovimento[0][i]);
 
-            //Cima para direita
-            if((casaAtual[0] + 2 < 7) && ((casaAtual[1]-1)>0)){
-                opcoesDeMovimento[0] = ((casaAtual[0] - 2) * 10) + (casaAtual[1] + 2);
-            }
+                    opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
+
+                    System.out.println("opcao coluna: " + opcoesDeMovimento[1][i]);
+                }
+                i++;
+            } while (i != 8);
             numPassos++;
         }
-        System.out.println(opcoesDeMovimento[0]);
-
     }
     // mais perto do centro, mais perto da ponta !=
 
+    public static int[] popularOpcoes(int direcao){
+        int[] opcao = new int[2];
+        switch(direcao){
+            //Direita para baixo ( 1 linha + 2 coluna )
+            case 0:
+                opcao[0] = 1;
+                opcao[1] = 2;
+                return  opcao;
+            //direita para cima ( -1 linha +2 coluna)
+            case 1:
+                opcao[0] = -1;
+                opcao[1] = 2;
+                return  opcao;
+            // Cima para direita ( -2 linha +1 coluna)
+            case 2:
+                opcao[0] = -2;
+                opcao[1] = 1;
+                return  opcao;
+            //Cima para esquerda
+            case 3:
+                opcao[0] = -2;
+                opcao[1] = -1;
+                return  opcao;
+            //Esquerda para cima
+            case 4:
+                opcao[0] = -1;
+                opcao[1] = -2;
+                return  opcao;
+            // Esquerda para baixo
+            case 5:
+                opcao[0] = +1;
+                opcao[1] = -2;
+                return  opcao;
+            //Baixo para esquerda -2
+            case 6:
+                opcao[0] = +2;
+                opcao[1] = -1;
+                return  opcao;
+            //Baixo para direita
+            case 7:
+                opcao[0] = 2;
+                opcao[1] = 1;
+                return  opcao;
+            default: return opcao;
+
+        }
+    }
 
     public static int[] lerString(String posicaoString){
         //Vetor com posicao
@@ -82,10 +120,7 @@ public class Main {
 
         return posicaoInt;
     }
-
 }
-
-
 
 /*
 *                       {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"},
