@@ -14,7 +14,7 @@ public class Main {
         // Tabuleiro
         boolean[][] tabuleiro = new boolean[8][8];
 
-        // matriz que guarda os movimentos FAZER CLASSE
+        // matriz que guarda os movimentos
         boolean[][][] movimentosErrados = new boolean[8][8][1000];
 
         // primeiro movimento
