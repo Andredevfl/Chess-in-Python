@@ -13,7 +13,7 @@ public class Main {
         // Tabuleiro
         boolean[][] tabuleiro = new boolean[8][8];
 
-        // matriz que guarda os movimentos
+        // matriz que guarda os movimentos errados
         boolean[][][] movimentosErrados = new boolean[8][8][1000];
 
         // primeiro movimento
@@ -27,14 +27,18 @@ public class Main {
             //preenche os array com as opcoes de movimento
             do{
                 int[] opcoes = popularOpcoes(i);
-                if ((opcoes[0] + casaAtual[0]) <= 7 && ((opcoes[1] + casaAtual[0]) >= 0)
-                    && (opcoes[1] + casaAtual[1]) <= 7 && ((opcoes[0] + casaAtual[1]) >= 0)) {
+                if ((opcoes[0] + casaAtual[0]) <= 7 && ((opcoes[0] + casaAtual[0]) >= 0)
+                    && (opcoes[1] + casaAtual[1]) <= 7 && ((opcoes[1] + casaAtual[1]) >= 0)) {
 
-                    opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
+                    if(tabuleiro[ opcoes[0]+casaAtual[0] ] [ opcoes[1]+casaAtual[1]] == false){
 
-                    opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
+                        opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
 
+                        opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
+
+                    }
                 }
+
                 i++;
             } while (i != 8);
 
