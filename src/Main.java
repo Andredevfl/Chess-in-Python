@@ -8,7 +8,6 @@ public class Main {
         //contador de opcoes
         int[] casaAtual = new int[2];
         int[][] opcoesDeMovimento = new int[2][8];
-        int[] movimentosFeitos;
         int numPassos = 63;
 
         // Tabuleiro
@@ -21,23 +20,34 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         casaAtual = lerString(scan.next());
+        tabuleiro[casaAtual[0]][casaAtual[1]] = true;
 
         while (numPassos != 64) {
+
+            //preenche os array com as opcoes de movimento
             do{
                 int[] opcoes = popularOpcoes(i);
-                if ((opcoes[0] + casaAtual[0]) < 7 && ((opcoes[1] + casaAtual[0]) > 0)
-                    && (opcoes[1] + casaAtual[1]) < 7 && ((opcoes[0] + casaAtual[1]) > 0)) {
+                if ((opcoes[0] + casaAtual[0]) <= 7 && ((opcoes[1] + casaAtual[0]) >= 0)
+                    && (opcoes[1] + casaAtual[1]) <= 7 && ((opcoes[0] + casaAtual[1]) >= 0)) {
 
                     opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
 
-                    System.out.println("opcao linha: " + opcoesDeMovimento[0][i]);
-
                     opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
 
-                    System.out.println("opcao coluna: " + opcoesDeMovimento[1][i]);
                 }
                 i++;
             } while (i != 8);
+
+            int contadorMovimento = 0;
+            int j = 1;
+            do {
+                if(opcoesDeMovimento[0][j-1] != 0){
+                    contadorMovimento++;
+                }
+                j++;
+            }while (j != 9);
+            System.out.println(contadorMovimento);
+
             numPassos++;
         }
     }
