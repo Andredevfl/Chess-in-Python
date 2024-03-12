@@ -7,14 +7,18 @@ public class Main {
         int i= 0;
         //contador de opcoes
         int[] casaAtual = new int[2];
+
         int[][] opcoesDeMovimento = new int[2][8];
+
+        int[][] movimentosFeitos = new int[2][63];
+
         int numPassos = 63;
 
         // Tabuleiro
         boolean[][] tabuleiro = new boolean[8][8];
 
         // matriz que guarda os movimentos errados
-        boolean[][][] movimentosErrados = new boolean[8][8][1000];
+        boolean[] movimentosErrados = new boolean[8];
 
         // primeiro movimento
         Scanner scan = new Scanner(System.in);
@@ -24,7 +28,11 @@ public class Main {
 
         while (numPassos != 64) {
 
+            int contadorMovimento = 0;
+            int j = 1;
+
             //preenche os array com as opcoes de movimento
+            //conta movimentos validos
             do{
                 int[] opcoes = popularOpcoes(i);
                 if ((opcoes[0] + casaAtual[0]) <= 7 && ((opcoes[0] + casaAtual[0]) >= 0)
@@ -33,23 +41,15 @@ public class Main {
                     if(tabuleiro[ opcoes[0]+casaAtual[0] ] [ opcoes[1]+casaAtual[1]] == false){
 
                         opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
-
                         opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
 
+                        contadorMovimento++;
                     }
                 }
 
                 i++;
             } while (i != 8);
 
-            int contadorMovimento = 0;
-            int j = 1;
-            do {
-                if(opcoesDeMovimento[0][j-1] != 0){
-                    contadorMovimento++;
-                }
-                j++;
-            }while (j != 9);
             System.out.println(contadorMovimento);
 
             numPassos++;
