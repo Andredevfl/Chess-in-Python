@@ -5,12 +5,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         int i= 0;
-        //contador de opcoes
+
         int[] casaAtual = new int[2];
 
-        int[][] opcoesDeMovimento = new int[2][8];
+        //Casa para verificar casas futuras
+        int[] casaTeste = new int[2];
 
-        int[][] movimentosFeitos = new int[2][63];
+        // Opcoes de movimento
+        int[][] opcoesDeMovimento = new int[2][8];
 
         int numPassos = 63;
 
@@ -24,35 +26,46 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         casaAtual = lerString(scan.next());
+
+        //Casa atual vira true
         tabuleiro[casaAtual[0]][casaAtual[1]] = true;
 
         while (numPassos != 64) {
 
-            int contadorMovimento = 0;
-            int j = 1;
+            //Array que decide o proximo movimento
+            int[] menorMovimento = new int[2];
 
             //preenche os array com as opcoes de movimento
-            //conta movimentos validos
-            do{
-                int[] opcoes = popularOpcoes(i);
-                if ((opcoes[0] + casaAtual[0]) <= 7 && ((opcoes[0] + casaAtual[0]) >= 0)
-                    && (opcoes[1] + casaAtual[1]) <= 7 && ((opcoes[1] + casaAtual[1]) >= 0)) {
+            preencherMovimentosValidos(casaAtual, tabuleiro, opcoesDeMovimento);
 
-                    if(tabuleiro[ opcoes[0]+casaAtual[0] ] [ opcoes[1]+casaAtual[1]] == false){
+            int menor = 9;
+            for (int j = 0; j < 7; j++) {
+                //Atribui a opcao a ser contada a quantidade de passos
 
-                        opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
-                        opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
-
-                        contadorMovimento++;
-                    }
+                if(opcoesDeMovimento[0][j] != -1){
+                    casaTeste[0] = opcoesDeMovimento[0][j];
+                } else {
+                    break;
                 }
 
-                i++;
-            } while (i != 8);
+                if(opcoesDeMovimento[1][j] != -1){
+                    casaTeste[1] = opcoesDeMovimento[1][j];
+                } else {
+                    break;
+                }
 
-            System.out.println(contadorMovimento);
+                if((contarMovimentos(casaTeste, tabuleiro) < menor) && (contarMovimentos(casaTeste, tabuleiro) != -1)){
+                    menorMovimento[0] = casaTeste[0];
+                    menorMovimento[1] = casaTeste[1];
+                    menor = contarMovimentos(casaTeste, tabuleiro);
+                }
+
+            }
+
+            System.out.println("Linha: " + menorMovimento[0] + " Coluna: " + menorMovimento[1]);
 
             numPassos++;
+
         }
     }
     // mais perto do centro, mais perto da ponta !=
@@ -133,6 +146,49 @@ public class Main {
         posicaoInt[0] = Integer.parseInt(num) - 1;
 
         return posicaoInt;
+    }
+
+    //preenche os array com as opcoes de movimento
+    public static void preencherMovimentosValidos(int[] casaAtual, boolean[][]tabuleiro, int[][]opcoesDeMovimento){
+        int i = 0;
+        do{
+            int[] opcoes = popularOpcoes(i);
+            if ((opcoes[0] + casaAtual[0]) <= 7 && ((opcoes[0] + casaAtual[0]) >= 0)
+            && (opcoes[1] + casaAtual[1]) <= 7 && ((opcoes[1] + casaAtual[1]) >= 0)) {
+                if(!tabuleiro[opcoes[0] + casaAtual[0]][opcoes[1] + casaAtual[1]]){
+                    opcoesDeMovimento[0][i] = opcoes[0] + casaAtual[0];
+                    opcoesDeMovimento[1][i] = opcoes[1] + casaAtual[1];
+
+                } else{
+                    opcoesDeMovimento[0][i] = -1;
+                    opcoesDeMovimento[1][i] = -1;
+                }
+
+            }
+            i++;
+
+        } while (i != 8);
+
+    }
+
+    public static int contarMovimentos(int[] casaFutura, boolean[][] tabuleiro){
+
+        int i = 0, contador = 0;
+        while (i != 8){
+            int[] opcoes = popularOpcoes(i);
+            if ((opcoes[0] + casaFutura[0]) <= 7 && ((opcoes[0] + casaFutura[0]) >= 0)
+                && (opcoes[1] + casaFutura[1]) <= 7 && ((opcoes[1] + casaFutura[1]) >= 0)) {
+
+                if(!tabuleiro[opcoes[0] + casaFutura[0]][opcoes[1] + casaFutura[1]]){
+                    contador++;
+
+                }
+            }
+            i++;
+        }
+
+        System.out.println("Contador da casa: " + (casaFutura[0]) + " " + (casaFutura[1]) + " " + "Numbero: " + contador);
+        return contador;
     }
 }
 
