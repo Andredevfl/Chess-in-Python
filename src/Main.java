@@ -82,21 +82,13 @@ public class Main {
             printarCasa(tabuleiroPrint, casaAtual, casaAnterior, numPassos);
 
             for (int j = 0; j < 8; j++) {
+                System.out.print("----------------------------" + "\n" + "|");
                 for (int k = 0; k < 8; k++) {
-
-                    System.out.print(tabuleiroPrint[j][k] + " ");
-
+                    System.out.print(tabuleiroPrint[j][k] + " " + "|");
                 }
                 System.out.println("\n");
             }
-
-            System.out.println("\n");
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            System.out.print("----------------------------" + "\n" + "\n" + "\n");
 
         }
     }
