@@ -30,15 +30,14 @@ public class Main {
         tabuleiro[casaAtual[0]][casaAtual[1]] = true;
 
         while (numPassos != 64) {
-
             //Array que decide o proximo movimento
             int[] menorMovimento = new int[2];
-
             //preenche os array com as opcoes de movimento
             preencherMovimentosValidos(casaAtual, tabuleiro, opcoesDeMovimento);
-
+            // int para validar se a casa tem a menor quantidade de movimentos validos
             int menor = 9;
-            for (int j = 0; j < 7; j++) {
+
+            for (int j = 0; j < 8; j++) {
 
                 //Atribui a opcao a ser contada a quantidade de passos
                     casaTeste[0] = opcoesDeMovimento[0][j];
@@ -172,7 +171,7 @@ public class Main {
     public static int contarMovimentos(int[] casaFutura, boolean[][] tabuleiro){
 
         int i = 0, contador = 0;
-        while (i != 7){
+        while (i != 8){
             int[] opcoes = popularOpcoes(i);
             if ((opcoes[0] + casaFutura[0]) <= 7 && ((opcoes[0] + casaFutura[0]) >= 0)
                 && (opcoes[1] + casaFutura[1]) <= 7 && ((opcoes[1] + casaFutura[1]) >= 0)) {
