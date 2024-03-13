@@ -6,7 +6,19 @@ public class Main {
     public static void main(String[] args) {
         int i= 0;
 
-        int[] primeiraCasa = new int[2];
+        String[][] tabuleiroPrint =
+                {
+                        {"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"},
+                        {"A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2"},
+                        {"A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"},
+                        {"A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4"},
+                        {"A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5"},
+                        {"A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"},
+                        {"A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7"},
+                        {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"}
+                };
+
+        int[] casaAnterior = new int[2];
 
         int[] casaAtual = new int[2];
 
@@ -27,9 +39,6 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         casaAtual = lerString(scan.next());
-
-        primeiraCasa[0] = casaAtual[0];
-        primeiraCasa[1] = casaAtual[1];
 
         //Casa atual vira true
         tabuleiro[casaAtual[0]][casaAtual[1]] = true;
@@ -60,6 +69,9 @@ public class Main {
 
             }
 
+            casaAnterior[0] = casaAtual[0];
+            casaAnterior[1] = casaAtual[1];
+
             casaAtual[0] = menorMovimento[0];
             casaAtual[1] = menorMovimento[1];
 
@@ -67,8 +79,24 @@ public class Main {
 
             numPassos++;
 
-            System.out.println(casaAtual[0] + " " + casaAtual[1] + "\n"
-                                + "passo numero: " + numPassos);
+            printarCasa(tabuleiroPrint, casaAtual, casaAnterior, numPassos);
+
+            for (int j = 0; j < 8; j++) {
+                for (int k = 0; k < 8; k++) {
+
+                    System.out.print(tabuleiroPrint[j][k] + " ");
+
+                }
+                System.out.println("\n");
+            }
+
+            System.out.println("\n");
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
@@ -195,6 +223,11 @@ public class Main {
             i++;
         }
         return contador;
+    }
+
+    public static void printarCasa(String[][] tabuleiroVisivel, int[] casaAtual, int[] casaAnterior, int numPassos){
+        tabuleiroVisivel[casaAtual[0]][casaAtual[1]] = "X";
+        tabuleiroVisivel[casaAnterior[0]] [casaAnterior[1]] = String.valueOf(numPassos);
     }
 }
 
