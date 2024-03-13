@@ -4,7 +4,6 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        int i= 0;
 
         String[][] tabuleiroPrint =
                 {
@@ -20,7 +19,7 @@ public class Main {
 
         int[] casaAnterior = new int[2];
 
-        int[] casaAtual = new int[2];
+        int[] casaAtual;
 
         //Casa para verificar casas futuras
         int[] casaTeste = new int[2];
@@ -124,12 +123,12 @@ public class Main {
                 return  opcao;
             // Esquerda para baixo
             case 5:
-                opcao[0] = +1;
+                opcao[0] = 1;
                 opcao[1] = -2;
                 return  opcao;
             //Baixo para esquerda -2
             case 6:
-                opcao[0] = +2;
+                opcao[0] = 2;
                 opcao[1] = -1;
                 return  opcao;
             //Baixo para direita
@@ -160,7 +159,7 @@ public class Main {
             case "F" -> 5;
             case "G" -> 6;
             case "H" -> 7;
-            default -> 0;
+            default -> -1;
         };
 
         //le a Coluna
