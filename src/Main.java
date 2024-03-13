@@ -19,8 +19,7 @@ public class Main {
         // Tabuleiro
         boolean[][] tabuleiro = new boolean[8][8];
 
-        // matriz que guarda os movimentos errados
-        boolean[] movimentosErrados = new boolean[8];
+        System.out.println("Digite a casa inicial");
 
         // primeiro movimento
         Scanner scan = new Scanner(System.in);
@@ -40,24 +39,19 @@ public class Main {
 
             int menor = 9;
             for (int j = 0; j < 7; j++) {
+
                 //Atribui a opcao a ser contada a quantidade de passos
-
-                if(opcoesDeMovimento[0][j] != -1){
                     casaTeste[0] = opcoesDeMovimento[0][j];
-                } else {
-                    break;
-                }
 
-                if(opcoesDeMovimento[1][j] != -1){
                     casaTeste[1] = opcoesDeMovimento[1][j];
-                } else {
-                    break;
-                }
 
-                if((contarMovimentos(casaTeste, tabuleiro) < menor) && (contarMovimentos(casaTeste, tabuleiro) != -1)){
+                int movimentosContados = contarMovimentos(casaTeste, tabuleiro);
+
+                // Salva o movimento eficiente
+                if(movimentosContados < menor && opcoesDeMovimento[0][j] != -1){
                     menorMovimento[0] = casaTeste[0];
                     menorMovimento[1] = casaTeste[1];
-                    menor = contarMovimentos(casaTeste, tabuleiro);
+                    menor = movimentosContados;
                 }
 
             }
@@ -164,6 +158,9 @@ public class Main {
                     opcoesDeMovimento[1][i] = -1;
                 }
 
+            } else {
+                opcoesDeMovimento[0][i] = -1;
+                opcoesDeMovimento[1][i] = -1;
             }
             i++;
 
@@ -171,10 +168,11 @@ public class Main {
 
     }
 
+    // Conta os movimentos validos das casas futuras e retorna a contagem
     public static int contarMovimentos(int[] casaFutura, boolean[][] tabuleiro){
 
         int i = 0, contador = 0;
-        while (i != 8){
+        while (i != 7){
             int[] opcoes = popularOpcoes(i);
             if ((opcoes[0] + casaFutura[0]) <= 7 && ((opcoes[0] + casaFutura[0]) >= 0)
                 && (opcoes[1] + casaFutura[1]) <= 7 && ((opcoes[1] + casaFutura[1]) >= 0)) {
@@ -186,19 +184,17 @@ public class Main {
             }
             i++;
         }
-
-        System.out.println("Contador da casa: " + (casaFutura[0]) + " " + (casaFutura[1]) + " " + "Numbero: " + contador);
         return contador;
     }
 }
 
 /*
-*                       {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"},
-                        {"A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7"},
-                        {"A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"},
-                        {"A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5"},
-                        {"A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4"},
-                        {"A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"},
+*                       {"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"},
                         {"A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2"},
-                        {"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"}
+                        {"A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3"},
+                        {"A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4"},
+                        {"A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5"},
+                        {"A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6"},
+                        {"A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7"},
+                        {"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"}
 * */
