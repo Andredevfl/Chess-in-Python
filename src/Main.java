@@ -6,6 +6,8 @@ public class Main {
     public static void main(String[] args) {
         int i= 0;
 
+        int[] primeiraCasa = new int[2];
+
         int[] casaAtual = new int[2];
 
         //Casa para verificar casas futuras
@@ -14,7 +16,7 @@ public class Main {
         // Opcoes de movimento
         int[][] opcoesDeMovimento = new int[2][8];
 
-        int numPassos = 63;
+        int numPassos = 0;
 
         // Tabuleiro
         boolean[][] tabuleiro = new boolean[8][8];
@@ -25,6 +27,9 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         casaAtual = lerString(scan.next());
+
+        primeiraCasa[0] = casaAtual[0];
+        primeiraCasa[1] = casaAtual[1];
 
         //Casa atual vira true
         tabuleiro[casaAtual[0]][casaAtual[1]] = true;
@@ -55,9 +60,15 @@ public class Main {
 
             }
 
-            System.out.println("Linha: " + menorMovimento[0] + " Coluna: " + menorMovimento[1]);
+            casaAtual[0] = menorMovimento[0];
+            casaAtual[1] = menorMovimento[1];
+
+            tabuleiro[ casaAtual[0] ] [ casaAtual[1] ] = true;
 
             numPassos++;
+
+            System.out.println(casaAtual[0] + " " + casaAtual[1] + "\n"
+                                + "passo numero: " + numPassos);
 
         }
     }
